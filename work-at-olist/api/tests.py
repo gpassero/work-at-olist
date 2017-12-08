@@ -1,16 +1,15 @@
 from django.test import TestCase
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
 from core.models import Channel, Category
 
 
-class ViewTestCase(TestCase):
+class ViewTestCase(APITestCase):
     """Test suite for the api views."""
 
     def setUp(self):
         """Define the test variables."""
-        client = APIClient()
         self.channel = Channel(name='test_channel')
         self.channel.save()
         self.categories_names = [
@@ -32,9 +31,9 @@ class ViewTestCase(TestCase):
         for category in self.categories:
             category.save()
         self.responses = {
-            'list_channels': client.get('/channels/'),
-            'list_channel_categories': client.get('/channels/%s/' % self.channel.name),
-            'list_category_relcategories': client.get('/channels/%s/%s' % (self.channel.name, self.categories_names[1]))
+            'list_channels': self.client.get('/channels/'),
+            'list_channel_categories': self.client.get('/channels/%s/' % self.channel.name),
+            'list_category_relcategories': self.client.get('/channels/%s/%s' % (self.channel.name, self.categories_names[1]))
         }
 
     def test_api_can_list_channels(self):
