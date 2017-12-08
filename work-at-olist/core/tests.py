@@ -3,7 +3,7 @@ from core.models import Channel, Category
 
 
 class ModelTestCase(TestCase):
-    """This class defines the test suite for the channel and category models."""
+    """Test suite for the channel and category models."""
 
     def setUp(self):
         """Define the test variables."""

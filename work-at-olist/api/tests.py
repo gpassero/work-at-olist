@@ -33,24 +33,23 @@ class ViewTestCase(APITestCase):
         self.responses = {
             'list_channels': self.client.get('/channels/'),
             'list_channel_categories': self.client.get('/channels/%s/' % self.channel.name),
-            'list_category_relcategories': self.client.get('/channels/%s/%s' % (self.channel.name, self.categories_names[1]))
+            'list_category_relcategories': self.client.get('/channels/%s/%s/' % (self.channel.name, self.categories_names[1]))
         }
 
     def test_api_can_list_channels(self):
         """Test the api can list channels."""
         response = self.responses['list_channels']
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response.data, {'name': self.channel.name})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, self.channel.name)
 
     def test_api_can_list_channel_categories(self):
         """Test the api can list a channel's categories."""
         response = self.responses['list_channel_categories']
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response.data, {'name': self.categories_names[0]})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, self.categories_names[0])
 
     def test_api_can_list_category_relcategories(self):
         """Test the api can return a category with parent and subcategories."""
         response = self.responses['list_category_relcategories']
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertContains(response.data, {'name': self.categories_names[0]})
-        self.assertContains(response.data, {'name': self.categories_names[2]})
+        self.assertContains(response, self.categories_names[0])
+        self.assertContains(response, self.categories_names[2])
