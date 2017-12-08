@@ -7,7 +7,7 @@ class Channel(models.Model):
     Attributes:
         name    The name of the channel
     """
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         """Return the name of the channel."""
