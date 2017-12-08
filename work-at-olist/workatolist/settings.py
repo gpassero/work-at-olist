@@ -2,6 +2,7 @@ import os
 import random
 import string
 
+import dj_database_url
 from prettyconf import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -73,6 +74,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+ENV_DATABASE = dj_database_url.config()
+DATABASES['default'].update(ENV_DATABASE)
 
 
 # Password validation
