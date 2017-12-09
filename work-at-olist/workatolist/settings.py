@@ -15,10 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ''.join([random.SystemRandom().choice("{}{}{}".format(
     string.ascii_letters, string.digits, string.punctuation)) for i in range(50)])
 
-DEBUG = config("DEBUG", default=False, cast=config.boolean)
+DEBUG = config("DJANGO_DEBUG", default=False, cast=config.boolean)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default=[], cast=config.list)
 
 # Application definition
 
