@@ -16,6 +16,8 @@ class FKSerializer(serializers.Serializer):
 
 class ChannelSerializer(serializers.ModelSerializer):
     """Serialize a channel and its categories."""
+    categories = FKSerializer(many=True)
+
     class Meta:
         model = Channel
         editable = False
