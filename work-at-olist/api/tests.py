@@ -27,8 +27,8 @@ class ViewTestCase(APITestCase):
         self.create_categories_recursive(self.categories_tree)
         self.responses = {
             'list_channels': self.client.get('/channels/'),
-            'list_channel_categories': self.client.get('/channels/%s/' % self.channel.name),
-            'list_category_relcategories': self.client.get('/channels/%s/%s/' % (self.channel.name, self.categories[1].name))
+            'list_channel_categories': self.client.get('/channels/%s/' % self.channel.uuid),
+            'list_category_relcategories': self.client.get('/categories/%s/' % (self.categories[1].uuid))
         }
 
     def create_categories_recursive(self, categories, parent=None):
