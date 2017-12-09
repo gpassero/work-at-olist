@@ -12,29 +12,34 @@ class ViewTestCase(APITestCase):
         """Define the test variables."""
         self.channel = Channel(name='test_channel')
         self.channel.save()
-        self.categories_names = [
-            'Games',
-            'Games / XBOX One',
-            'Games / XBOX One / Console',
-            'Games / XBOX One / Acessories',
-            'Games / XBOX One / Games',
-            'Games / XBOX 360',
-            'Games / Playstation 4',
-            'Books',
-            'Books / National Literature',
-            'Books / National Literature / Science Fiction',
-            'Books / National Literature / Fiction Fantastic',
-            'Books / Foreign Language',
-        ]
-        self.categories = [Category(name=name, channel=self.channel)
-                           for name in self.categories_names]
-        for category in self.categories:
-            category.save()
+        self.categories_tree = {
+            'Games': {
+                'XBOX One': ['Console', 'Acessories', 'Games'],
+                'XBOX 360': None,
+                'Playstation 4': None
+            },
+            'Books': {
+                'National Literature': ['Science Fiction', 'Fiction Fantastic'],
+                'Foreign Language': None
+            }
+        }
+        self.categories = []
+        self.create_categories_recursive(self.categories_tree)
         self.responses = {
             'list_channels': self.client.get('/channels/'),
             'list_channel_categories': self.client.get('/channels/%s/' % self.channel.name),
-            'list_category_relcategories': self.client.get('/channels/%s/%s/' % (self.channel.name, self.categories_names[1]))
+            'list_category_relcategories': self.client.get('/channels/%s/%s/' % (self.channel.name, self.categories[1].name))
         }
+
+    def create_categories_recursive(self, categories, parent=None):
+        for name in categories:
+            category = Category(name=name, parent=parent, channel=self.channel)
+            category.save()
+            self.categories.append(category)
+            if isinstance(categories, dict):
+                subcategories = categories[name]
+                if subcategories:
+                    self.create_categories_recursive(subcategories, category)
 
     def test_api_can_list_channels(self):
         """Test the api can list channels."""
@@ -46,10 +51,10 @@ class ViewTestCase(APITestCase):
         """Test the api can list a channel's categories."""
         response = self.responses['list_channel_categories']
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, self.categories_names[0])
+        self.assertContains(response, self.categories[0].name)
 
     def test_api_can_list_category_relcategories(self):
         """Test the api can return a category with parent and subcategories."""
         response = self.responses['list_category_relcategories']
-        self.assertContains(response, self.categories_names[0])
-        self.assertContains(response, self.categories_names[2])
+        self.assertContains(response, self.categories[0].name)
+        self.assertContains(response, self.categories[2].name)
