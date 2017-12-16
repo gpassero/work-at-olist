@@ -28,7 +28,7 @@ The following sections present the API documentation.
 
 No param needed.
 
-* **Response:**
+* **Example of response:**
 
   * **Code:** 200 <br />
     **Content:** `[{"uuid":"a816bf61-2945-464b-af0c-4003dfd9e099","name":"walmart"},{"uuid":"1605b908-61b3-4131-a34d-df9ad29f53c8","name":"google"}]`
@@ -48,7 +48,7 @@ No param needed.
 
 - _uuid:_ The uuid of the channel to be listed (all channels uuid and name can be seen at [*List channels*](#list-channels) service).
 
-* **Response:**
+* **Example of response:**
 
   * **Code:** 200 <br />
     **Content:** `{"uuid":"a816bf61-2945-464b-af0c-4003dfd9e099","name":"walmart","categories":[{"uuid":"7c159432-b3d9-454c-9ad9-ca22dd0b8b2e","name":"Desktop","parent":"074c7002-a80d-4a31-b2a3-4da5b47447f0"},{"uuid":"81c503e6-aa77-4d45-934e-690fd7cb01b6","name":"Tablets","parent":"074c7002-a80d-4a31-b2a3-4da5b47447f0"},{"uuid":"34fe95d5-7e9b-4e71-a0f5-bfe30bfb6de1","name":"Notebooks","parent":"074c7002-a80d-4a31-b2a3-4da5b47447f0"},...]}`    
@@ -68,7 +68,7 @@ No param needed.
 
 - _uuid:_ The uuid of the category to be listed (a channel's categories can be listed at [*List channels' categories and subcategories*](#list-channels-categories-and-subcategories) service).
 
-* **Response:**
+* **Example of response:**
 
   * **Code:** 200 <br />
     **Content:** `{"uuid":"0d8e61b7-f6b4-4457-a120-f8dd33539f06","name":"Books","channel":{"uuid":"a816bf61-2945-464b-af0c-4003dfd9e099","name":"walmart"},"parent":null,"subcategories":[{"uuid":"fb76950e-e6e3-4420-96b6-b1135b9a9459","name":"Computers"},{"uuid":"2a444f90-58ba-49ed-b376-da878bad9d98","name":"Foreign Literature"},{"uuid":"a12eed22-3bb9-4712-a9d5-f58aa2dd0c32","name":"National Literature"}]}`    
