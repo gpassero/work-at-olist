@@ -1,7 +1,7 @@
 # Work at Olist
 
 ## Introduction
-This Django project provides a set of REST web services to expose sellers' categories of products. The main provided services are:
+This Django project provides a set of REST web services to expose sellers' categories of products. A channel concept is used to group a seller's categories. The main provided services are:
 
 - List existing channels.
 - List all categories and subcategories of a channel.
@@ -73,3 +73,29 @@ No param needed.
   * **Code:** 200 <br />
     **Content:** `{"uuid":"0d8e61b7-f6b4-4457-a120-f8dd33539f06","name":"Books","channel":{"uuid":"a816bf61-2945-464b-af0c-4003dfd9e099","name":"walmart"},"parent":null,"subcategories":[{"uuid":"fb76950e-e6e3-4420-96b6-b1135b9a9459","name":"Computers"},{"uuid":"2a444f90-58ba-49ed-b376-da878bad9d98","name":"Foreign Literature"},{"uuid":"a12eed22-3bb9-4712-a9d5-f58aa2dd0c32","name":"National Literature"}]}`    
  
+## Creating channels
+A channel can only be created server-side by using the following command:
+
+```
+$ python manage.py importcategories <channel_name> <categories_filename>
+```
+
+The _channel\_name_ defines the name of the channel to be created. If there already exists a channel with the input name, it will be completely overwritten.
+The _categories\_filename_ must refer to a plain text file with a list of categories and subcategories, as in this example:
+
+```
+Books
+Books / National Literature
+Books / National Literature / Science Fiction
+Books / National Literature / Fiction Fantastic
+Books / Foreign Literature
+Books / Computers
+Books / Computers / Applications
+Books / Computers / Database
+Books / Computers / Programming
+Computers
+Computers / Notebooks
+Computers / Tablets
+Computers / Desktop
+...
+```
